@@ -1,5 +1,11 @@
 const userModel = require('../models/user')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
+
+dotenv.config()
+
+const secret = process.env.APP_SECRET
 
 const registerUser = async (req, res) => {
     try {
@@ -36,7 +42,11 @@ const logUserIn = async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, foundUser.password)
 
         if (!isPasswordValid) return res.send({ msg: 'Wrong password.' })
-        else return res.send({ msg: 'Login successful.' })
+        else {
+            const payload = { id: foundUser._id, userName: foundUser.userName }
+            const token = await jwt.sign(payload, secret)
+            return res.send({ msg: 'Login successful.', token })
+        }
     } catch (error) {
         console.log(error)
         res.status(500).json({ msg: 'Internal server error' })
