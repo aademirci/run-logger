@@ -6,19 +6,22 @@ dotenv.config()
 const secret = process.env.APP_SECRET
 
 const verifyToken = async (req, res, next) => {
-    let headers = req.headers.authorization
+    const headers = req.headers.authorization
     
     if (headers) {
         const clientToken = headers.split(' ')[1]
-        const verifiedToken = await jwt.verify(clientToken, secret)
 
-        if (!verifiedToken) return res.send({ msg: 'Invalid token.' })
-        else {
+        try {
+            const verifiedToken = await jwt.verify(clientToken, secret)
+
             req.user = verifiedToken
             next()
+        } catch (error) {
+            console.log(error)
+            return res.status(403).json({ error: 'Failed to authenticate token' })
         }
     } else {
-        return res.send({ msg: 'Token not found.' })
+        return res.status(401).json({ error: 'Token not found.' })
     }
 }
 
