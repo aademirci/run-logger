@@ -66,4 +66,31 @@ const getUserProfile = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, logUserIn, getUserProfile }
+const editUserProfile = async (req, res) => {
+    try {
+        const userName = req.params.username
+        const author = req.user.userName
+        const theUser = await userModel.findOne({ userName })
+
+        if (theUser.userName === author) {
+            const { fullName, height, weight, shoesBrand, shoesModel } = req.body
+
+            theUser.fullName = fullName
+            theUser.height = height
+            theUser.weight = weight
+            theUser.shoesBrand = shoesBrand
+            theUser.shoesModel = shoesModel
+    
+            await theUser.save()
+    
+            return res.send({ msg: 'User profile is updated.' })
+        } else {
+            return res.send({ msg: 'Wrong author.' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: 'Internal server error' })
+    }
+}
+
+module.exports = { registerUser, logUserIn, getUserProfile, editUserProfile }

@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema({
     fullName: String,
     height: Number,
     weight: Number,
-    shoes: String,
+    shoesBrand: String,
+    shoesModel: String,
     runs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Run' }],
     totalRun: { type: Number, default: 0 }
 }, { timestamps: true, toJSON: { virtuals: true } })
