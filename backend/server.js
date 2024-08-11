@@ -8,7 +8,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/user', require('./routers/user'))
+app.use('/run', require('./routers/run'))
 app.get('/testroute', verifyToken, (req, res) => {
+    console.log(req.user.id)
     return res.send('Welcome!')
 })
 

@@ -53,4 +53,17 @@ const logUserIn = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, logUserIn }
+const getUserProfile = async (req, res) => {
+    try {
+        const userName = req.params.username
+        const theUser = await userModel.findOne({ userName })
+        await theUser.populate('runs')
+
+        res.json(theUser)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: 'Internal server error' })
+    }
+}
+
+module.exports = { registerUser, logUserIn, getUserProfile }
