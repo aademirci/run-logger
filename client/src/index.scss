@@ -1,0 +1,45 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font: inherit;
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 16px;
+}
+
+.container {
+margin: 36px;
+}
+
+.nav-bar { background-color: #eee; padding: 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px;
+	h1 { font-size: xx-large; }
+}
+
+.nav-menu { text-align: right; list-style: none; display: flex; gap: 18px; }
+
+.profile-container { display: flex; gap: 36px; }
+
+.sidebar { background-color: #eee; padding: 36px; text-align: center; width: 25%;
+	ul { list-style: none; 
+		li { margin-bottom: 18px; 
+			&:last-child { margin-bottom: 0; }
+		}
+	}
+}
+
+.profile-pic { background-color: #ccc; width: 100%; aspect-ratio: 1; border-radius: 50%; margin-bottom: 36px; }
+
+.runs { background-color: #eee; padding: 36px; width: 75%; list-style: none; 
+	li { margin-bottom: 36px; }
+	h2 { font-size: x-large; }
+	p { margin-bottom: 9px;}
+	h3 { font-weight: bold; }
+}
