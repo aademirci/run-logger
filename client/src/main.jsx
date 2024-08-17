@@ -6,6 +6,7 @@ import './index.scss'
 import NavBar from './Common/NavBar.jsx'
 import Sidebar from './Common/Sidebar.jsx'
 import Runs from './Profile/Runs.jsx'
+import CreateRun from './Profile/CreateRun.jsx'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
                 </>
             }>
                 <Route path='/user/:username' element={<Runs />} />
+                <Route path='/user/:username/run/create' element={<CreateRun />} />
             </Route>
             </Routes>
         </BrowserRouter>

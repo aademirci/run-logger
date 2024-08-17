@@ -10,9 +10,10 @@ const createRun = async (req, res) => {
         if (theRunner) {
             theRunner.runs.push(createdRun)
             theRunner.save()
+            return res.send({ msg: 'Running activity added successfully.', createdRun })
+        } else {
+            return res.send({ msg: 'Runner is not available.' })
         }
-
-        res.json(createdRun)
     } catch (error) {
         console.log(error)
         res.status(500).json({ msg: 'Internal server error' })

@@ -9,10 +9,8 @@ const Runs = () => {
     const [cookies] = useCookies(['runlogger'])
     const [runs, setRuns] = useState()
 
-    console.log(cookies)
-
     useEffect(() => {
-        axios.get(`http://localhost:8080/user/${username}`, {headers: { Authorization: `Bearer ${cookies.runlogger}` }}).then(result => setRuns(result.data.runs))
+        axios.get(`http://localhost:8080/user/${username}`, { headers: { Authorization: `Bearer ${cookies.runlogger}` } }).then(result => setRuns(result.data.runs))
     }, [username, cookies])
 
     if (runs) {
