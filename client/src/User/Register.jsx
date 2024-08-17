@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
     const navigate = useNavigate()
@@ -26,7 +26,7 @@ const Register = () => {
 
             if (newUser) {
                 alert(msg)
-                navigate('/login')
+                navigate('/')
             } else {
                 alert(msg)
             }
@@ -38,15 +38,25 @@ const Register = () => {
     }
 
     return (
-        <div>
-            <label htmlFor="userName">Username:</label>
-            <input type="text" name="userName" id="userName" onChange={handleChange} value={userName} />
-            <label htmlFor="email">Email:</label>
-            <input type="email" name="email" id="email" onChange={handleChange} value={email} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" name="password" id="password" onChange={handleChange} value={password} />
-            <button onClick={handleClick}>Sign up</button>
+        <div className='register'>
+            <div className='register-form'>
+                <span>
+                    <label htmlFor="userName">Username:</label>
+                    <input type="text" name="userName" id="userName" onChange={handleChange} value={userName} />
+                </span>
+                <span>
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" name="email" id="email" onChange={handleChange} value={email} />
+                </span>
+                <span>
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" name="password" id="password" onChange={handleChange} value={password} />
+                </span>
+                <button onClick={handleClick}>Sign up</button>
+            </div>
+            <p>Already a member? <Link to="/">Log in</Link></p>
         </div>
+        
     )
 }
 

@@ -1,33 +1,30 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import './index.scss'
-import Register from './user/Register.jsx'
-import Login from './user/Login.jsx'
-import Profile from './Profile/Profile.jsx'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />
-  },
-  {
-    path: 'register',
-    element: <Register />
-  },
-  {
-    path: 'login',
-    element: <Login />
-  },
-  {
-    path: 'user/:username',
-    element: <Profile />
-  }
-])
+import NavBar from './Common/NavBar.jsx'
+import Sidebar from './Common/Sidebar.jsx'
+import Runs from './Profile/Runs.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+    <StrictMode>
+        <BrowserRouter>
+            <Routes>
+            <Route path='/' element={<App register={false} />} />
+            <Route path='/register' element={<App register={true} />} />
+            <Route element={
+                <>
+                <NavBar />
+                <div className="profile-container">
+                    <Sidebar />
+                    <Outlet />
+                </div>
+                </>
+            }>
+                <Route path='/user/:username' element={<Runs />} />
+            </Route>
+            </Routes>
+        </BrowserRouter>
+    </StrictMode>,
 )

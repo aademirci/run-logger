@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useCookies } from 'react-cookie'
 
 const Login = () => {
@@ -34,16 +34,24 @@ const Login = () => {
         } catch (error) {
             console.log(error)
         }
-        
     }
+    
     return (
-        <div>
-            <label htmlFor="userName">Username:</label>
-            <input type="text" name="userName" id="userName" onChange={handleChange} value={userName} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" name="password" id="password" onChange={handleChange} value={password} />
-            <button onClick={handleClick}>Log in</button>
+        <div className="login">
+            <div className="login-form">
+                <span>
+                    <label htmlFor="userName">Username:</label>
+                    <input type="text" name="userName" id="userName" onChange={handleChange} value={userName} />
+                </span>
+                <span>
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" name="password" id="password" onChange={handleChange} value={password} />
+                </span>
+                <button onClick={handleClick}>Log in</button>
+            </div>
+            <p>Not a member yet? <Link to="/register">Sign up</Link></p>
         </div>
+        
     )
 }
 
