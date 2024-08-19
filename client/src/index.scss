@@ -8,7 +8,10 @@ h1 { font-size: 72px; margin-bottom: 18px; }
 .container { margin: 36px; }
 
 a { color: #000 }
-button { border: 1px solid #000; padding: 8px; cursor: pointer; 
+
+input, textarea { padding: 8px; background-color: #eee; border: none; }
+.error { color: red; font-style: italic; padding-block: 8px }
+button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-decoration: none;
 	&:hover { background-color: #ccc; }
 }
 
@@ -18,12 +21,14 @@ button { border: 1px solid #000; padding: 8px; cursor: pointer;
 	p { text-align: center;font-size: small; }
 }
 
-.login-form, .register-form { display: grid; gap: 18px; place-items: center; background-color: #ccc; padding: 36px; margin-bottom: 9px;
+.login-form, .register-form { background-color: #ccc; padding: 36px; margin-bottom: 9px;
+	form { display: grid; gap: 18px; place-items: center; }
 	span { display: grid; width: 100%; }
 	label { margin-bottom: 4px; }
-	input { padding: 8px; background-color: #eee; border: none; }
+	
 	button { width: 50%; }
 }
+
 
 .nav-bar { background-color: #eee; padding: 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px;
 	h1 { font-size: xx-large; }
@@ -31,7 +36,7 @@ button { border: 1px solid #000; padding: 8px; cursor: pointer;
 
 .nav-menu { text-align: right; list-style: none; display: flex; gap: 18px; align-items: center; }
 
-.profile-container { display: flex; gap: 36px; }
+.profile-container { display: flex; gap: 36px; align-items: flex-start; }
 
 .sidebar { background-color: #eee; padding: 36px; text-align: center; width: 25%;
 	ul { list-style: none; 
@@ -48,4 +53,19 @@ button { border: 1px solid #000; padding: 8px; cursor: pointer;
 	h2 { font-size: x-large; }
 	p { margin-bottom: 9px;}
 	h3 { font-weight: bold; }
+}
+
+.create-run { background-color: #ccc; padding: 36px; width: 75%; 
+	h3 { font-size: larger; font-weight: bold; margin-bottom: 18px;}
+	form { display: flex; flex-wrap: wrap; }
+	.panel { width: calc(50% - 18px); 
+		&:nth-of-type(2) { margin-left: 36px; }
+		&:last-of-type { width: 100%; display: flex; flex-wrap: wrap; justify-content: flex-end;
+			label { width: 24%; padding-top: 8px; }
+			textarea { width: 76%; height: 100px; margin-bottom: 18px;}
+		}
+	}
+	span { display: flex; flex-wrap: wrap; margin-bottom: 18px; align-items: center;}
+	label, input { width: 50%; }
+	.error { width: 100%; text-align: right; }
 }
