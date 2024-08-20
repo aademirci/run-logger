@@ -1,6 +1,22 @@
 const runModel = require('../models/run')
 const userModel = require('../models/user')
 
+const getRun = async (req, res) => {
+    try {
+        const runId = req.params.id
+        const theRun = await runModel.findById(runId)
+
+        if (theRun) {
+            res.json(theRun)
+        } else {
+            return res.send({ msg: 'Running event is not found.' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: 'Internal server error' })
+    }
+}
+
 const createRun = async (req, res) => {
     try {
         const newRun = req.body
@@ -10,7 +26,7 @@ const createRun = async (req, res) => {
         if (theRunner) {
             theRunner.runs.push(createdRun)
             theRunner.save()
-            return res.send({ msg: 'Running activity added successfully.', createdRun })
+            return res.send({ msg: 'Running activity added successfully.', run: createdRun })
         } else {
             return res.send({ msg: 'Runner is not available.' })
         }
@@ -30,7 +46,7 @@ const editRun = async (req, res) => {
             const editedRun = req.body
             await runModel.findByIdAndUpdate(runId, editedRun)
             
-            return res.send({ msg: 'Running event is edited.' })
+            return res.send({ msg: 'Running event is edited.', run: {...editedRun, runner} })
         } else {
             return res.send({ msg: 'Wrong author.' })
         }
@@ -59,4 +75,4 @@ const deleteRun = async (req, res) => {
     }
 }
 
-module.exports = { createRun, editRun, deleteRun }
+module.exports = { getRun, createRun, editRun, deleteRun }

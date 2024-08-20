@@ -12,20 +12,21 @@ createRoot(document.getElementById('root')).render(
     <StrictMode>
         <BrowserRouter>
             <Routes>
-            <Route path='/' element={<App register={false} />} />
-            <Route path='/register' element={<App register={true} />} />
-            <Route element={
-                <>
-                <NavBar />
-                <div className="profile-container">
-                    <Sidebar />
-                    <Outlet />
-                </div>
-                </>
-            }>
-                <Route path='/user/:username' element={<Runs />} />
-                <Route path='/user/:username/run/create' element={<CreateRun />} />
-            </Route>
+                <Route path='/' element={<App register={false} />} />
+                <Route path='/register' element={<App register={true} />} />
+                <Route element={
+                    <>
+                    <NavBar />
+                    <div className="profile-container">
+                        <Sidebar />
+                        <Outlet />
+                    </div>
+                    </>
+                }>
+                    <Route path='/user/:username' element={<Runs />} />
+                    <Route path='/user/:username/run/create' element={<CreateRun editing={false} />} />
+                    <Route path='/user/:username/run/edit/:id' element={<CreateRun editing={true} />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     </StrictMode>,

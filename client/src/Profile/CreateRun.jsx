@@ -1,23 +1,34 @@
 import axios from "axios"
 import { ErrorMessage, Field, Form, Formik } from "formik"
+import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
-const CreateRun = () => {
+const CreateRun = ({ editing }) => {
     const navigate = useNavigate()
+    const { id } = useParams()
+    const [editedRun, setEditedRun] = useState({})
     const [cookies] = useCookies(['runlogger'])
+    const URL = 'http://localhost:8080/run/'
+    const headers = { Authorization: `Bearer ${cookies.runlogger}` }
 
-    return (
+    useEffect(() => {
+        if (editing) {
+            axios.get(`${URL}${id}`).then(result => setEditedRun(result.data))
+        }
+    }, [editing, id])
+    
+    if (!editing || (editing && editedRun._id)) return (
         <div className="create-run">
-            <h3>Log new run</h3>
+            <h3>{editing ? 'Edit run' : 'Log new run'}</h3>
             <Formik
-                initialValues={{ 
-                    eventName: '',
-                    location: '',
-                    date: '',
-                    routeLength: '',
-                    duration: '',
-                    remarks: '' 
+                initialValues={{
+                    eventName: editedRun.eventName ? editedRun.eventName : '',
+                    location: editedRun.location ? editedRun.location : '',
+                    date: editedRun.date ? editedRun.date.split('T')[0] : '',
+                    routeLength: editedRun.routeLength ? editedRun.routeLength : '',
+                    duration: editedRun.duration ? editedRun.duration : '',
+                    remarks: editedRun.remarks ? editedRun.remarks : ''
                 }}
                 validate={values => {
                     const errors = {}
@@ -30,12 +41,12 @@ const CreateRun = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
                         setSubmitting(false)
-                        const { data } = await axios.post('http://localhost:8080/run/create', { ...values }, { headers: { Authorization: `Bearer ${cookies.runlogger}` } })
-                        const { createdRun, msg } = data
-            
-                        if (createdRun) {
+                        const { data } = editing ? await axios.put(`${URL}edit/${id}`, { ...values }, { headers }) : await axios.post(`${URL}create`, { ...values }, { headers })
+                        const { run, msg } = data
+
+                        if (run) {
                             alert(msg)
-                            navigate(`/user/${createdRun.runner}`)
+                            navigate(`/user/${run.runner}`)
                         } else {
                             alert(msg)
                         }
@@ -77,7 +88,7 @@ const CreateRun = () => {
                         <div className="panel">
                             <label htmlFor="remarks">Remarks:</label>
                             <Field as="textarea" name="remarks" />
-                            <button type="submit" disabled={isSubmitting}>Create run</button>
+                            <button type="submit" disabled={isSubmitting}>{editing ? 'Edit run' : 'Create run'}</button>
                         </div>
                     </Form>
                 )}

@@ -20,7 +20,7 @@ const NavBar = () => {
             <ul className="nav-menu">
                 <li>Leaderboard</li>
                 <li>Search</li>
-                <li><Link to={`/user/${userName}/run/create`} className="button">Log run</Link></li>
+                <li><Link to={`/user/${userName}/run/create`} className="button" reloadDocument>Log run</Link></li>
                 <li><Link to={`/user/${userName}`}>Profile</Link></li>
             </ul>
         </nav>
