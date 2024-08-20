@@ -7,6 +7,7 @@ import NavBar from './Common/NavBar.jsx'
 import Sidebar from './Common/Sidebar.jsx'
 import Runs from './Profile/Runs.jsx'
 import CreateRun from './Profile/CreateRun.jsx'
+import EditProfile from './Profile/EditProfile.jsx'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
                     </>
                 }>
                     <Route path='/user/:username' element={<Runs />} />
+                    <Route path='/user/:username/edit' element={<EditProfile />} />
                     <Route path='/user/:username/run/create' element={<CreateRun editing={false} />} />
                     <Route path='/user/:username/run/edit/:id' element={<CreateRun editing={true} />} />
                 </Route>

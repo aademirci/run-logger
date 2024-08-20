@@ -50,7 +50,9 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 .profile-pic { background-color: #ccc; width: 100%; aspect-ratio: 1; border-radius: 50%; margin-bottom: 36px; }
 
 .runs { background-color: #eee; padding: 36px; width: 75%; list-style: none; 
-	li { margin-bottom: 36px; }
+	li { margin-bottom: 36px; 
+		&:last-child { margin-bottom: 0; }
+	}
 	h2 { font-size: x-large; }
 	p { margin-bottom: 9px;}
 	h3 { font-weight: bold; }
@@ -60,7 +62,7 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 	a { color: red }
 }
 
-.create-run { background-color: #ccc; padding: 36px; width: 75%; 
+.create-run, .edit-profile { background-color: #ccc; padding: 36px; width: 75%; 
 	h3 { font-size: larger; font-weight: bold; margin-bottom: 18px;}
 	form { display: flex; flex-wrap: wrap; }
 	.panel { width: calc(50% - 18px); 
@@ -70,7 +72,8 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 			textarea { width: 76%; height: 100px; margin-bottom: 18px;}
 		}
 	}
-	span { display: flex; flex-wrap: wrap; margin-bottom: 18px; align-items: center;}
+	span { display: flex; flex-wrap: wrap; margin-bottom: 18px; align-items: center; }
+	.full-name { width: 48%; margin-right: 52%; }
 	label, input { width: 50%; }
 	.error { width: 100%; text-align: right; }
 }

@@ -1,16 +1,17 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 
 const Sidebar = () => {
     const { username } = useParams()
     const [cookies] = useCookies(['runlogger'])
     const [user, setUser] = useState()
+    const location = useLocation();
 
     useEffect(() => {
         axios.get(`http://localhost:8080/user/${username}`, {headers: { Authorization: `Bearer ${cookies.runlogger}` }}).then(result => setUser(result.data))
-    }, [username, cookies])
+    }, [username, cookies, location])
 
     if (user) {
         return (

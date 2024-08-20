@@ -83,7 +83,7 @@ const editUserProfile = async (req, res) => {
     
             await theUser.save()
     
-            return res.send({ msg: 'User profile is updated.' })
+            return res.send({ msg: 'User profile is updated.', user: theUser })
         } else {
             return res.send({ msg: 'Wrong author.' })
         }
