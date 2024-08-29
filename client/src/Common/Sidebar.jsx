@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { useLocation, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 
 const Sidebar = () => {
     const { username } = useParams()
@@ -19,7 +19,7 @@ const Sidebar = () => {
                 <div className="profile-pic">Profile pic</div>
                 <ul>
                     {user.fullName && <li>{user.fullName}</li>}
-                    <li>@{user.userName}</li>
+                    <li>@{user.userName} {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName && <Link to={`/user/${username}/edit`}>(edit profile)</Link>}</li>
                     {user.height && <li>{user.height}cm</li>}
                     {user.weight && <li>{user.weight}kg</li>}
                     {user.shoesBrand && <li>{user.shoesBrand} {user.shoesModel && `(${user.shoesModel})`}</li>}
