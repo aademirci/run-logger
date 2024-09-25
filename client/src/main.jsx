@@ -31,7 +31,8 @@ createRoot(document.getElementById('root')).render(
                     <Route path='/user/:username/run/create' element={<CreateRun editing={false} />} />
                     <Route path='/user/:username/run/edit/:id' element={<CreateRun editing={true} />} />
                     <Route path='/user/:username/shoes/' element={<Shoes />} />
-                    <Route path='/user/:username/shoes/add' element={<CreateShoes />} />
+                    <Route path='/user/:username/shoes/add' element={<CreateShoes editing={false} />} />
+                    <Route path='/user/:username/shoes/edit/:id' element={<CreateShoes editing={true} />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -55,13 +55,22 @@ const createShoes = async (req, res) => {
 const editShoes = async (req, res) => {
     try {
         const shoesId = req.params.id
-        const shoesPhoto = req.file.path
+        const shoesPhoto = req.file ? req.file.path : null
         const owner = req.user.userName
 
         const selectedShoes = await shoeModel.findById(shoesId)
         if (selectedShoes.owner === owner) {
             const editedShoes = req.body
+            
             await shoeModel.findByIdAndUpdate(shoesId, editedShoes)
+
+            if (shoesPhoto !== null) {
+                const uploadResult = await cloudinary.v2.uploader.upload(shoesPhoto, {
+                    folder: 'run-logger/shoes',
+                    transformation: { width: 300, height: 300, crop: 'fill' }
+                })
+                await shoeModel.findByIdAndUpdate(shoesId, { photoURL: uploadResult.secure_url })
+            }
 
             const shoesInList = await shoeListModel.findOne({ brand: editedShoes.brand, model: editedShoes.model })
 

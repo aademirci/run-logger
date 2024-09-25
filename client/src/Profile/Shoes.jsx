@@ -18,7 +18,7 @@ const Shoes = () => {
             <ul className='shoes'>
                 {shoes.map(shoe => (
                     <li key={shoe._id}>
-                        <p>{shoe.brand} - {shoe.model} ({shoe.totalRun})</p>
+                        <p>{shoe.brand} - {shoe.model} ({shoe.totalRun} km)</p>
                         <img src={shoe.photoURL} alt={`${shoe.brand} - ${shoe.model}`} />
                         <div className="manage-shoes">
                             {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName && shoe.isDefault ? 

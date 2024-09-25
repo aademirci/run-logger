@@ -6,7 +6,7 @@ const upload = require('../config/multer-config')
 
 router.get('/:id', getShoes)
 router.post('/create', [verifyToken, upload.single('image')], createShoes)
-router.put('/edit/:id', verifyToken, editShoes)
+router.put('/edit/:id', [verifyToken, upload.single('image')], editShoes)
 router.delete('/delete/:id', verifyToken, deleteShoes)
 
 module.exports = router
