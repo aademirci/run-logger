@@ -35,10 +35,8 @@ const CreateShoes = ({ editing }) => {
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
                         setSubmitting(true)
-                        console.log(values)
                         const { data } = editing ? await axios.put(`${URL}edit/${id}`, { ...values }, { headers }) : await axios.post(`${URL}create`, { ...values }, { headers })
                         const { shoes, msg } = data
-                        console.log(data)
                         if (shoes) {
                             alert(msg)
                             navigate(`/user/${shoes.owner}/shoes`)
