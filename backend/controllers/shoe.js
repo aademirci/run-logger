@@ -96,7 +96,10 @@ const deleteShoes = async (req, res) => {
         const selectedShoes = await shoeModel.findById(shoesId)
         if (selectedShoes.owner === owner) {
             await shoeModel.findByIdAndDelete(shoesId)
-
+            const theOwner = await userModel.findOne({ userName: owner })
+            const index = theOwner.shoes.indexOf(selectedShoes._id)
+            theOwner.shoes.splice(index, 1)
+            theOwner.save()
             return res.send({ msg: 'Shoes are deleted.' })
         } else {
             return res.send({ msg: 'Wrong author.' })
