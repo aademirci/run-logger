@@ -3,6 +3,8 @@ const shoeModel = require('../models/shoe')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
+const cloudinary = require('cloudinary')
+const cloudinaryConfig = require('../config/cloudinary-config')
 
 dotenv.config()
 
@@ -96,4 +98,35 @@ const editUserProfile = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, logUserIn, getUserProfile, editUserProfile }
+const updateUserAvatar = async (req, res) => {
+    try {
+        console.log('hmmmm')
+        const userName = req.params.username
+        console.log(userName)
+        const author = req.user.userName
+        console.log(author)
+        const theUser = await userModel.findOne({ userName })
+        console.log(theUser)
+        console.log(req.file)
+        const avatar = req.file.path
+        console.log('avatar')
+        if (theUser.userName === author) {
+            
+            const uploadResult = await cloudinary.v2.uploader.upload(avatar, {
+                folder: 'run-logger/avatars',
+                transformation: { width: 300, height: 300, crop: 'fill' }
+            })
+            theUser.avatarURL = uploadResult.secure_url
+    
+            await theUser.save()
+    
+            return res.send({ msg: 'User avatar is updated.', user: theUser })
+        } else {
+            return res.send({ msg: 'Wrong author.' })
+        }
+    } catch (error) {
+        
+    }
+}
+
+module.exports = { registerUser, logUserIn, getUserProfile, editUserProfile, updateUserAvatar }
