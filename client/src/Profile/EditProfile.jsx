@@ -25,8 +25,6 @@ const EditProfile = () => {
                     fullName: user.fullName ? user.fullName : '',
                     height: user.height ? user.height : '',
                     weight: user.weight ? user.weight : '',
-                    shoesBrand: user.shoesBrand ? user.shoesBrand : '',
-                    shoesModel: user.shoesModel ? user.shoesModel : ''
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
@@ -56,19 +54,11 @@ const EditProfile = () => {
                                 <label htmlFor="height">Height (cm):</label>
                                 <Field type="number" min="0" name="height" />
                             </span>
-                            <span>
-                                <label htmlFor="weight">Weight (kg):</label>
-                                <Field type="number" step="0.1" min="0" name="weight" />
-                            </span>
                         </div>
                         <div className="panel">
                             <span>
-                                <label htmlFor="shoesBrand">Shoes brand:</label>
-                                <Field type="text" name="shoesBrand" />
-                            </span>
-                            <span>
-                                <label htmlFor="shoesModel">Shoes model:</label>
-                                <Field type="text" name="shoesModel" />
+                                <label htmlFor="weight">Weight (kg):</label>
+                                <Field type="number" step="0.1" min="0" name="weight" />
                             </span>
                         </div>
                         <div className="panel">
