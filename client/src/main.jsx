@@ -8,6 +8,8 @@ import Sidebar from './Common/Sidebar.jsx'
 import Runs from './Profile/Runs.jsx'
 import CreateRun from './Profile/CreateRun.jsx'
 import EditProfile from './Profile/EditProfile.jsx'
+import Shoes from './Profile/Shoes.jsx'
+import CreateShoes from './Profile/CreateShoes.jsx'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -28,6 +30,8 @@ createRoot(document.getElementById('root')).render(
                     <Route path='/user/:username/edit' element={<EditProfile />} />
                     <Route path='/user/:username/run/create' element={<CreateRun editing={false} />} />
                     <Route path='/user/:username/run/edit/:id' element={<CreateRun editing={true} />} />
+                    <Route path='/user/:username/shoes/' element={<Shoes />} />
+                    <Route path='/user/:username/shoes/add' element={<CreateShoes />} />
                 </Route>
             </Routes>
         </BrowserRouter>

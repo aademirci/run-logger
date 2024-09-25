@@ -2,15 +2,15 @@ const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
     userName: { type: String, unique: true },
-    email: String,
+    email: { type: String, unique: true },
     password: String,
     fullName: String,
     height: Number,
     weight: Number,
-    shoesBrand: String,
-    shoesModel: String,
     runs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Run' }],
-    totalRun: { type: Number, default: 0 }
+    shoes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shoe' }],
+    totalRun: { type: Number, default: 0 },
+    avatarURL: String
 }, { timestamps: true, toJSON: { virtuals: true } })
 
 const User = mongoose.model('User', UserSchema)

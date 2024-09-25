@@ -7,7 +7,9 @@ const RunSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
     routeLength: Number,
     duration: String,
-    remarks: String
+    remarks: String,
+    shoe: { type: mongoose.Schema.Types.ObjectId, ref: 'Shoe' },
+    photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Photo' }]
 }, { toJSON: { virtuals: true } })
 
 const Run = mongoose.model('Run', RunSchema)
