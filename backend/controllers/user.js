@@ -100,16 +100,11 @@ const editUserProfile = async (req, res) => {
 
 const updateUserAvatar = async (req, res) => {
     try {
-        console.log('hmmmm')
         const userName = req.params.username
-        console.log(userName)
         const author = req.user.userName
-        console.log(author)
         const theUser = await userModel.findOne({ userName })
-        console.log(theUser)
-        console.log(req.file)
         const avatar = req.file.path
-        console.log('avatar')
+
         if (theUser.userName === author) {
             
             const uploadResult = await cloudinary.v2.uploader.upload(avatar, {
