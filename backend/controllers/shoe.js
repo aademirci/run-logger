@@ -110,4 +110,25 @@ const deleteShoes = async (req, res) => {
     }
 }
 
-module.exports = { getShoes, createShoes, editShoes, deleteShoes }
+const updateNoShoesPhoto = async (req, res) => {
+    try {
+        const shoesId = req.params.id
+        const selectedShoes = await shoeModel.findById(shoesId)
+        const photo = req.file.path
+
+        const uploadResult = await cloudinary.v2.uploader.upload(photo, {
+            folder: 'run-logger/shoes',
+            transformation: { width: 300, height: 300, crop: 'fill' }
+        })
+        selectedShoes.photoURL = uploadResult.secure_url
+
+        await selectedShoes.save()
+
+        return res.send({ msg: 'No shoes photo is updated.', shoes: selectedShoes })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: 'Internal server error' })
+    }
+}
+
+module.exports = { getShoes, createShoes, editShoes, deleteShoes, updateNoShoesPhoto }

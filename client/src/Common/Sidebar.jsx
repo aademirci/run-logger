@@ -25,7 +25,6 @@ const Sidebar = () => {
             const avatar = inputFile.current.files[0]
             const formData = new FormData()
             formData.append('image', avatar)
-            console.log(formData)
             const { data } = await axios.put(`${URL}${username}/avatar`, formData, { headers: { Authorization: `Bearer ${cookies.runlogger}` } })
             const { user, msg } = data
             if (user) {
