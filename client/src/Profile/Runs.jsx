@@ -16,8 +16,8 @@ const Runs = () => {
 
     if (runs) {
         return (
-            <ul className='runs'>
-                {runs.map(run => {
+            <ul className="runs">
+                {runs.length === 0 ? <li>This user has not run yet.</li> : runs.map(run => {
                     if (run.eventName) return (
                     <li key={run._id}>
                         <h2>{run.eventName} {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName && <ManageItem username={username} id={run._id} cookies={cookies} item="run" />}</h2>
@@ -36,7 +36,7 @@ const Runs = () => {
         )
     } else {
         return (
-            <div>Please login first.</div>
+            <div className="runs">Please login first.</div>
         )
     }
     

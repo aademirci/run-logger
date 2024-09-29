@@ -40,7 +40,7 @@ const Shoes = () => {
 
     if (shoes) {
         return (
-            <ul className='shoes'>
+            <ul className="shoes">
                 {shoes.map(shoe => (
                     <li key={shoe._id}>
                         <p>{shoe.brand} - {shoe.model} ({shoe.totalRun} km)</p>
@@ -57,11 +57,12 @@ const Shoes = () => {
                         </div>}
                     </li>
                 ))}
+                {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName && <li className="add-shoes"><Link to={`/user/${username}/shoes/add`}>Add shoes</Link></li>}
             </ul>
         )
     } else {
         return (
-            <div>Please login first.</div>
+            <div className="shoes">Please login first.</div>
         )
     }
 }

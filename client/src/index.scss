@@ -1,6 +1,47 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; font: inherit; }
 
+@mixin sweepEffect($textColour, $bgColour, $direction:top) {
+    display: inline-block;
+    vertical-align: top;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    transition-property: color;
+    transition-duration: .2s;
+    
+    &:before { 
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $bgColour;
+        
+        @if $direction == "right" {
+            transform: scaleX(0); //
+            transform-origin: 0 50%; //
+        } @else {
+            transform: scaleY(0);
+            transform-origin: 50% 100%;
+        }
+        
+        transition-property: transform;
+        transition-duration: .2s;
+    }
+    
+    &:hover, &:focus, &:active { color: $textColour; }
+    &:hover:before, &:focus:before, &:active:before { 
+        @if $direction == "right" {
+            transform: scaleX(1);
+        } @else {
+            transform: scaleY(1);
+        }
+    }
+}
+
 body { font-family: sans-serif; font-size: 16px; }
 h1 { font-size: 72px; margin-bottom: 18px; }
 
@@ -39,11 +80,15 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 
 .profile-container { display: flex; gap: 36px; align-items: flex-start; }
 
-.sidebar { background-color: #eee; padding: 36px; text-align: center; width: 25%;
-	ul { list-style: none; 
-		li { margin-bottom: 18px; 
-			&:last-child { margin-bottom: 0; }
-		}
+.sidebar { background-color: #eee; padding: 36px 36px 0 36px; text-align: center; width: 25%;
+	ul { list-style: none; }
+}
+.profile-info { 
+	li { margin-bottom: 18px; }
+}
+.tabs { 
+	li { border-left: #ccc solid 5px; background-color: #ddd; margin-bottom: 1px; @include sweepEffect(#000, #ccc, "right");
+		a { display: block; padding: 18px; }
 	}
 }
 
@@ -88,6 +133,11 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 	}
 	p { position: absolute; max-width: 300px; background-color: rgba($color: #fff, $alpha: 0.75); padding: 18px; }
 	img { width: 100%; }
+}
+.add-shoes { border: 5px dashed #ccc;
+	a { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; 
+		&:hover { background-color: rgba($color: white, $alpha: 0.5); }
+	}
 }
 
 .manage-shoes { position: absolute; width: 100%; height: 100%; background-color: rgba($color: #000000, $alpha: 0.75); top: 0; display: none; align-items: center; justify-content: center; color: white;

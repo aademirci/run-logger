@@ -46,7 +46,7 @@ const Sidebar = () => {
                     <input type="file" name="avatar" id="avatar" ref={inputFile} style={{display: 'none'}} onChange={handleChange} />
                     <div className="add-avatar" onClick={handleClick}>Upload avatar</div>
                 </div>
-                <ul>
+                <ul className="profile-info">
                     {user.fullName && <li>{user.fullName}</li>}
                     <li>@{user.userName} {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName && <Link to={`/user/${username}/edit`}>(edit profile)</Link>}</li>
                     {user.height && <li>{user.height}cm</li>}
@@ -54,7 +54,10 @@ const Sidebar = () => {
                     {user.shoesBrand && <li>{user.shoesBrand} {user.shoesModel && `(${user.shoesModel})`}</li>}
                     <li>Total run: {user.totalRun}km</li>
                 </ul>
-                
+                <ul className="tabs">
+                    <li><Link to={`/user/${username}`}>Runs</Link></li>
+                    <li><Link to={`/user/${username}/shoes`}>Shoes</Link></li>
+                </ul>
             </aside>
         )
     } else {
