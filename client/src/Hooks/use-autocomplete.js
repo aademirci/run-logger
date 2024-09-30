@@ -84,7 +84,7 @@ export default function useAutoComplete({ delay = 500, source, onChange, inputRe
         const keyOperation = {
             [KEY_CODES.DOWN]: scrollDown,
             [KEY_CODES.UP]: scrollUp,
-            [KEY_CODES.ENTER]: () => selectOption(selectedIndex, inputRef.current.classList[0]),
+            [KEY_CODES.ENTER]: () => selectOption(selectedIndex, inputRef.current.id),
             [KEY_CODES.ESCAPE]: clearSuggestions,
             [KEY_CODES.PAGE_DOWN]: pageDown,
             [KEY_CODES.PAGE_UP]: pageUp,
@@ -100,7 +100,7 @@ export default function useAutoComplete({ delay = 500, source, onChange, inputRe
         bindOption: {
             onClick: e => {
                 let nodes = Array.from(inputRef.current.children)
-                selectOption(nodes.indexOf(e.target.closest("li")), inputRef.current.classList[0])
+                selectOption(nodes.indexOf(e.target.closest("li")), inputRef.current.id)
             },
         },
         bindInput: {

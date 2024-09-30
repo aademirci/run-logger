@@ -78,8 +78,8 @@ const CreateShoes = ({ editing }) => {
                             <span>
                                 <label htmlFor="brand">Shoe brand:</label>
                                 <Field type="text" name="brand" {...bindInput} onFocus={e => setField(e.target.name)} value={textValue['brand'] || editedShoe.brand || ''} />
-                                <ul className="brand suggestions" ref={brandRef} >
-                                    {refResult?.classList[0] === 'brand' && suggestions.map((_, index) => (
+                                <ul id="brand" className="suggestions" ref={brandRef} >
+                                    {refResult?.id === 'brand' && suggestions.map((_, index) => (
                                         <li key={index} {...bindOption} className={selectedIndex === index ? 'active' : undefined}>
                                             {suggestions[index].label}
                                         </li>
@@ -91,8 +91,8 @@ const CreateShoes = ({ editing }) => {
                             <span>
                                 <label htmlFor="model">Shoe model:</label>
                                 <Field type="text" name="model" {...bindInput} onFocus={e => setField(e.target.name)} value={textValue['model'] || editedShoe.model || ''} />
-                                <ul className="model suggestions" ref={modelRef}>
-                                    {refResult?.classList[0] === 'model' && suggestions.map((_, index) => (
+                                <ul id="model" className="suggestions" ref={modelRef}>
+                                    {refResult?.id === 'model' && suggestions.map((_, index) => (
                                         <li key={index} {...bindOption} className={selectedIndex === index ? 'active' : undefined}>
                                             {suggestions[index].label}
                                         </li>
