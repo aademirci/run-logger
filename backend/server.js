@@ -10,6 +10,7 @@ app.use(express.json())
 app.use('/user', require('./routers/user'))
 app.use('/run', require('./routers/run'))
 app.use('/shoes', require('./routers/shoe'))
+app.use('/shoelist', require('./routers/shoelist'))
 app.get('/testroute', verifyToken, (req, res) => {
     console.log(req.user.id)
     return res.send('Welcome!')
