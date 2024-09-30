@@ -22,7 +22,7 @@ const CreateShoes = ({ editing }) => {
         }
     }, [editing, id])
 
-    const { bindInput,  bindOption, isBusy, suggestions, refResult, textValue } = useAutoComplete({
+    const { bindInput,  bindOption, isBusy, suggestions, refResult, textValue, selectedIndex } = useAutoComplete({
         onChange: value => console.log(value),
         delay: 1000,
         source: async (search, type) => {
@@ -51,8 +51,8 @@ const CreateShoes = ({ editing }) => {
                 }}
                 validate={values => {
                     const errors = {}
-                    if (!values.brand) errors.brand = '* Required'
-                    if (!values.model) errors.model = '* Required'
+                    if (!(textValue['brand'] || editedShoe.brand)) errors.brand = '* Required'
+                    if (!(textValue['model'] || editedShoe.model)) errors.model = '* Required'
                     if (!editing && values.image === null) errors.image = '* Required'
                     return errors
                 }}
@@ -77,10 +77,10 @@ const CreateShoes = ({ editing }) => {
                         <div className="panel">
                             <span>
                                 <label htmlFor="brand">Shoe brand:</label>
-                                <Field type="text" name="brand" {...bindInput} onFocus={e => setField(e.target.name)} value={textValue['brand'] || editedShoe.brand} />
+                                <Field type="text" name="brand" {...bindInput} onFocus={e => setField(e.target.name)} value={textValue['brand'] || editedShoe.brand || ''} />
                                 <ul className="brand suggestions" ref={brandRef} >
                                     {refResult?.classList[0] === 'brand' && suggestions.map((_, index) => (
-                                        <li key={index} {...bindOption}>
+                                        <li key={index} {...bindOption} className={selectedIndex === index ? 'active' : undefined}>
                                             {suggestions[index].label}
                                         </li>
                                     ))}
@@ -90,10 +90,10 @@ const CreateShoes = ({ editing }) => {
                             </span>
                             <span>
                                 <label htmlFor="model">Shoe model:</label>
-                                <Field type="text" name="model" {...bindInput} onFocus={e => setField(e.target.name)} value={textValue['model'] || values.model} />
+                                <Field type="text" name="model" {...bindInput} onFocus={e => setField(e.target.name)} value={textValue['model'] || editedShoe.model || ''} />
                                 <ul className="model suggestions" ref={modelRef}>
                                     {refResult?.classList[0] === 'model' && suggestions.map((_, index) => (
-                                        <li key={index} {...bindOption}>
+                                        <li key={index} {...bindOption} className={selectedIndex === index ? 'active' : undefined}>
                                             {suggestions[index].label}
                                         </li>
                                     ))}
