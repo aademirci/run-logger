@@ -8,7 +8,7 @@ const RunSchema = new mongoose.Schema({
     routeLength: Number,
     duration: String,
     remarks: String,
-    shoe: { type: mongoose.Schema.Types.ObjectId, ref: 'Shoe' },
+    shoes: { type: mongoose.Schema.Types.ObjectId, ref: 'Shoe' },
     photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Photo' }]
 }, { toJSON: { virtuals: true } })
 

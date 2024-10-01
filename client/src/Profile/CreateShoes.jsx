@@ -110,7 +110,7 @@ const CreateShoes = ({ editing }) => {
                             </span>
                         </div>
                         <div className="panel">
-                            <button type="submit" disabled={isSubmitting} onClick={() => setValues({...values, brand: textValue['brand'] || editedShoe.brand, model: textValue['model'] || editedShoe.model})}>{editing ? 'Edit shoes' : 'Add shoes'}</button>
+                            <button type="submit" disabled={isSubmitting} onClick={() => setValues({...values, brand: textValue['brand'] || editedShoe.brand, model: textValue['model'] || editedShoe.model})}>{isSubmitting ? 'Loading' : editing ? 'Edit shoes' : 'Add shoes'}</button>
                         </div>
                     </Form>
                 )}

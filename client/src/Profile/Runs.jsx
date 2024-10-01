@@ -17,7 +17,7 @@ const Runs = () => {
     if (runs) {
         return (
             <ul className="runs">
-                {runs.length === 0 ? <li>This user has not run yet.</li> : runs.map(run => {
+                {runs.length === 0 ? <li>This user has not run yet.</li> : runs.sort((a, b) => b.date > a.date).map(run => {
                     if (run.eventName) return (
                     <li key={run._id}>
                         <h2>{run.eventName} {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName && <ManageItem username={username} id={run._id} cookies={cookies} item="run" />}</h2>
@@ -25,7 +25,8 @@ const Runs = () => {
                             {run.location ? `${run.location} · ` : ''}
                             {run.date ? `${format(run.date, 'd MMMM yyyy')} · ` : ''} 
                             {run.routeLength ? `${run.routeLength}km · ` : ''} 
-                            {run.duration ? `${run.duration} time` : ''}
+                            {run.duration ? `${run.duration} time · ` : ''}
+                            {run.shoes ? `${run.shoes.brand} (${run.shoes.model})` : ''}
                         </p>
                         <h3>Remarks:</h3>
                         <p>{run.remarks ? run.remarks : 'No remarks'}</p>

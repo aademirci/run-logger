@@ -43,7 +43,7 @@ const Shoes = () => {
             <ul className="shoes">
                 {shoes.map(shoe => (
                     <li key={shoe._id}>
-                        <p>{shoe.brand} - {shoe.model} ({shoe.totalRun} km)</p>
+                        <p>{shoe.brand} - {shoe.model} ({shoe.totalRun.toFixed(2)} km)</p>
                         <img src={shoe.photoURL} alt={`${shoe.brand} - ${shoe.model}`} />
                         {username === JSON.parse(window.atob(cookies.runlogger.split('.')[1])).userName &&
                         <div className="manage-shoes">

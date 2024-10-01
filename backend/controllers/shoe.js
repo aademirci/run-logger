@@ -20,6 +20,17 @@ const getShoes = async (req, res) => {
     }
 }
 
+const getAllShoes = async (req, res) => {
+    try {
+        const owner = req.user.userName
+        const allShoes = await shoeModel.find({ owner })
+        res.json(allShoes)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: 'Internal server error' })
+    }
+}
+
 const createShoes = async (req, res) => {
     try {
         const newShoes = req.body
@@ -131,4 +142,4 @@ const updateNoShoesPhoto = async (req, res) => {
     }
 }
 
-module.exports = { getShoes, createShoes, editShoes, deleteShoes, updateNoShoesPhoto }
+module.exports = { getShoes, getAllShoes, createShoes, editShoes, deleteShoes, updateNoShoesPhoto }

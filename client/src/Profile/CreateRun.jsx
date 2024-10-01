@@ -8,8 +8,10 @@ const CreateRun = ({ editing }) => {
     const navigate = useNavigate()
     const { id } = useParams()
     const [editedRun, setEditedRun] = useState({})
+    const [shoes, setShoes] = useState([])
     const [cookies] = useCookies(['runlogger'])
     const URL = 'http://localhost:8080/run/'
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const headers = { Authorization: `Bearer ${cookies.runlogger}` }
 
     useEffect(() => {
@@ -17,6 +19,10 @@ const CreateRun = ({ editing }) => {
             axios.get(`${URL}${id}`).then(result => setEditedRun(result.data))
         }
     }, [editing, id])
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/shoes/', { headers }).then(result => setShoes(result.data))
+    }, [headers])
     
     if (!editing || (editing && editedRun._id)) return (
         <div className="create-run">
@@ -28,7 +34,8 @@ const CreateRun = ({ editing }) => {
                     date: editedRun.date ? editedRun.date.split('T')[0] : '',
                     routeLength: editedRun.routeLength ? editedRun.routeLength : '',
                     duration: editedRun.duration ? editedRun.duration : '',
-                    remarks: editedRun.remarks ? editedRun.remarks : ''
+                    remarks: editedRun.remarks ? editedRun.remarks : '',
+                    shoes: editedRun.shoes ? editedRun.shoes : ''
                 }}
                 validate={values => {
                     const errors = {}
@@ -36,6 +43,7 @@ const CreateRun = ({ editing }) => {
                     if (!values.location) errors.location = '* Required'
                     if (!values.date) errors.date = '* Required'
                     if (!values.routeLength) errors.routeLength = '* Required'
+                    if (!values.shoes) errors.shoes = '* Required'
                     return errors
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
@@ -83,6 +91,14 @@ const CreateRun = ({ editing }) => {
                             <span>
                                 <label htmlFor="duration">Duration:</label>
                                 <Field type="time" step="1" name="duration" />
+                            </span>
+                            <span>
+                                <label htmlFor="shoes">Shoes:</label>
+                                <Field as="select" name="shoes">
+                                    <option disabled value="">(Select shoes)</option>
+                                    {shoes && shoes.map(shoe => <option key={shoe._id} value={shoe._id}>{shoe.brand} ({shoe.model})</option>)}
+                                </Field>
+                                <ErrorMessage name="shoes" component="div" className="error" />
                             </span>
                         </div>
                         <div className="panel">

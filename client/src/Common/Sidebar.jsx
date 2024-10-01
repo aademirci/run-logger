@@ -52,7 +52,7 @@ const Sidebar = () => {
                     {user.height && <li>{user.height}cm</li>}
                     {user.weight && <li>{user.weight}kg</li>}
                     {user.shoesBrand && <li>{user.shoesBrand} {user.shoesModel && `(${user.shoesModel})`}</li>}
-                    <li>Total run: {user.totalRun}km</li>
+                    <li>Total run: {user.totalRun.toFixed(2)}km</li>
                 </ul>
                 <ul className="tabs">
                     <li><Link to={`/user/${username}`}>Runs</Link></li>

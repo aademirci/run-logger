@@ -63,7 +63,7 @@ const getUserProfile = async (req, res) => {
     try {
         const userName = req.params.username
         const theUser = await userModel.findOne({ userName })
-        await theUser.populate('runs')
+        await theUser.populate({ path: 'runs', populate: { path: 'shoes' } })
         await theUser.populate('shoes')
 
         res.json(theUser)

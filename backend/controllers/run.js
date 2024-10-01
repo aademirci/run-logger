@@ -1,5 +1,6 @@
 const runModel = require('../models/run')
 const userModel = require('../models/user')
+const shoeModel = require('../models/shoe')
 
 const getRun = async (req, res) => {
     try {
@@ -22,10 +23,14 @@ const createRun = async (req, res) => {
         const newRun = req.body
         const createdRun = await runModel.create({ ...newRun, runner: req.user.userName })
         const theRunner = await userModel.findOne({ userName: createdRun.runner })
+        const theShoes = await shoeModel.findById(newRun.shoes)
 
         if (theRunner) {
             theRunner.runs.push(createdRun)
+            theRunner.totalRun += newRun.routeLength
             theRunner.save()
+            theShoes.totalRun += newRun.routeLength
+            theShoes.save()
             return res.send({ msg: 'Running activity added successfully.', run: createdRun })
         } else {
             return res.send({ msg: 'Runner is not available.' })
@@ -42,9 +47,15 @@ const editRun = async (req, res) => {
         const runner = req.user.userName
 
         const selectedRun = await runModel.findById(runId)
+        const theRunner = await userModel.findOne({ userName: selectedRun.runner })
+        const theShoes = await shoeModel.findById(selectedRun.shoes)
         if (selectedRun.runner === runner) {
             const editedRun = req.body
             await runModel.findByIdAndUpdate(runId, editedRun)
+            theShoes.totalRun += editedRun.routeLength - selectedRun.routeLength
+            theRunner.totalRun += editedRun.routeLength - selectedRun.routeLength
+            theShoes.save()
+            theRunner.save()
             
             return res.send({ msg: 'Running event is edited.', run: {...editedRun, runner} })
         } else {
@@ -62,7 +73,13 @@ const deleteRun = async (req, res) => {
         const runner = req.user.userName
 
         const selectedRun = await runModel.findById(runId)
+        const theRunner = await userModel.findOne({ userName: selectedRun.runner })
+        const theShoes = await shoeModel.findById(selectedRun.shoes)
         if (selectedRun.runner === runner) {
+            theRunner.totalRun -= selectedRun.routeLength
+            theRunner.save()
+            theShoes.totalRun -= selectedRun.routeLength
+            theShoes.save()
             await runModel.findByIdAndDelete(runId)
 
             return res.send({ msg: 'Running event is deleted.' })
