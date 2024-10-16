@@ -1,6 +1,8 @@
 const runModel = require('../models/run')
 const userModel = require('../models/user')
 const shoeModel = require('../models/shoe')
+const cloudinary = require('cloudinary')
+const cloudinaryConfig = require('../config/cloudinary-config')
 
 const getRun = async (req, res) => {
     try {
@@ -21,7 +23,14 @@ const getRun = async (req, res) => {
 const createRun = async (req, res) => {
     try {
         const newRun = req.body
-        const createdRun = await runModel.create({ ...newRun, runner: req.user.userName })
+        const runPhotos = req.files
+        let imageResponses
+        if (runPhotos) {
+            const multiImagePromise = runPhotos.map(runPhoto => cloudinary.v2.uploader.upload(runPhoto.path, { folder: 'run-logger/runs', transformation: { width: 960, height: 720, crop: 'fill' } }))
+            imageResponses = await Promise.all(multiImagePromise)
+        }
+        const photoURLs = imageResponses.map(imageResponse => imageResponse.secure_url)
+        const createdRun = await runModel.create({ ...newRun, runner: req.user.userName, photoURLs })
         const theRunner = await userModel.findOne({ userName: createdRun.runner })
         const theShoes = await shoeModel.findById(newRun.shoes)
 

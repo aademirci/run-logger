@@ -106,6 +106,13 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 	p { margin-bottom: 9px;}
 	h3 { font-weight: bold; }
 }
+.photos {
+	ul { display: flex; flex-wrap: wrap; list-style: none; gap: 20px;
+		li { width: 240px; margin-bottom: 0;
+			img { width: 100%; }
+		}
+	}
+}
 
 .edit-delete { font-size: small; vertical-align: super;
 	a { color: red }
@@ -121,11 +128,23 @@ button, .button { border: 1px solid #000; padding: 8px; cursor: pointer; text-de
 			textarea { width: 76%; height: 100px; margin-bottom: 18px;}
 		}
 	}
+	.upload { width: 100%; border: 5px dashed #bbb; margin-block: 36px; 
+		.dropzone { padding: 36px 36px 28px 36px; }
+		p { text-align: center; margin-bottom: 8px; }
+	}
 	span { display: flex; flex-wrap: wrap; margin-bottom: 18px; align-items: center; position: relative; }
 	.full-name { width: 48%; margin-right: 52%; }
 	label, input { width: 50%; }
 	.error { width: 100%; text-align: right; }
 	.loading { position: absolute; right: 8px; top: 8px; z-index: 9; color: #ccc; }
+}
+
+.thumbs-container { display: flex; flex-wrap: wrap; padding: 0 36px 28px 36px;
+	.thumb { display: inline-flex; border-radius: 2px; border: 1px solid #eaeaea; margin-bottom: 8px; margin-right: 8px; width: 100px; height: 100px; padding: 4px;
+	}
+	.thumb-inner { display: flex; min-width: 0; overflow: hidden; 
+		img { display: block; width: auto; height: 100%; }
+	}
 }
 
 .shoes { background-color: #eee; padding: 36px; width: 75%; list-style: none; display: flex; flex-wrap: wrap; gap: 36px;

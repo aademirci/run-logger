@@ -1,8 +1,9 @@
-import axios from "axios"
-import { ErrorMessage, Field, Form, Formik } from "formik"
-import { useEffect, useState } from "react"
-import { useCookies } from "react-cookie"
-import { useNavigate, useParams } from "react-router-dom"
+import axios from 'axios'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
+import { useNavigate, useParams } from 'react-router-dom'
+import UploadPhotos from '../Common/UploadPhotos'
 
 const CreateRun = ({ editing }) => {
     const navigate = useNavigate()
@@ -12,7 +13,7 @@ const CreateRun = ({ editing }) => {
     const [cookies] = useCookies(['runlogger'])
     const URL = 'http://localhost:8080/run/'
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const headers = { Authorization: `Bearer ${cookies.runlogger}` }
+    const headers = { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${cookies.runlogger}` }
 
     useEffect(() => {
         if (editing) {
@@ -48,7 +49,8 @@ const CreateRun = ({ editing }) => {
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
-                        setSubmitting(false)
+                        setSubmitting(true)
+                        console.log(values)
                         const { data } = editing ? await axios.put(`${URL}edit/${id}`, { ...values }, { headers }) : await axios.post(`${URL}create`, { ...values }, { headers })
                         const { run, msg } = data
 
@@ -63,7 +65,7 @@ const CreateRun = ({ editing }) => {
                     }
                 }}
             >
-                {({ isSubmitting }) => (
+                {({ setFieldValue, isSubmitting }) => (
                     <Form>
                         <div className="panel">
                             <span>
@@ -101,10 +103,11 @@ const CreateRun = ({ editing }) => {
                                 <ErrorMessage name="shoes" component="div" className="error" />
                             </span>
                         </div>
+                        <UploadPhotos setFieldValue={setFieldValue} />
                         <div className="panel">
                             <label htmlFor="remarks">Remarks:</label>
                             <Field as="textarea" name="remarks" />
-                            <button type="submit" disabled={isSubmitting}>{editing ? 'Edit run' : 'Create run'}</button>
+                            <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Loading' : editing ? 'Edit run' : 'Create run'}</button>
                         </div>
                     </Form>
                 )}

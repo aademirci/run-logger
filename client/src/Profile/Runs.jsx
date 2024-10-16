@@ -30,6 +30,12 @@ const Runs = () => {
                         </p>
                         <h3>Remarks:</h3>
                         <p>{run.remarks ? run.remarks : 'No remarks'}</p>
+                        {run.photoURLs.length !== 0 && <div className="photos">
+                            <h3>Photos:</h3>
+                            <ul>
+                                {run.photoURLs.map(photoURL => <li key={photoURL}><img src={photoURL} /></li>)}
+                            </ul>
+                        </div>}
                     </li>
                     )}
                 )}
